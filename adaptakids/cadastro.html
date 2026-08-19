@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastrar — AdaptaKids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="api.js"></script>
+<style>
+  .blob1{width:260px;height:260px; top:-60px; right:-60px;}
+  .form-erro{background:#FEF2F2; color:#B91C1C; border:1px solid #FCA5A5; border-radius:10px; padding:10px 14px; font-size:0.88rem; margin-bottom:16px; display:none;}
+  .blob2{width:180px;height:180px; bottom:-40px; left:-40px;}
+
+  .backpack-scene{display:flex; align-items:flex-end; gap:10px;}
+  .backpack{
+    width:110px;height:130px; border-radius:20px 20px 26px 26px;
+    background:#C4B5FD; position:relative; box-shadow:0 10px 20px rgba(0,0,0,0.15);
+  }
+  .backpack::before{
+    content:'';
+    position:absolute; top:-16px; left:50%; transform:translateX(-50%);
+    width:56px;height:26px; border:8px solid #C4B5FD; border-bottom:none;
+    border-radius:20px 20px 0 0;
+  }
+  .backpack::after{
+    content:'';
+    position:absolute; top:24px; left:50%; transform:translateX(-50%);
+    width:46px;height:56px; background:#A78BFA; border-radius:10px;
+  }
+  .pencil-cup{
+    width:56px;height:64px; border-radius:10px 10px 16px 16px;
+    background:#FDE68A; position:relative;
+  }
+  .cup-pencil{position:absolute; bottom:52px; width:7px;height:56px; border-radius:4px;}
+  .cp1{left:12px; background:var(--pink); transform:rotate(-10deg);}
+  .cp2{left:24px; background:var(--primary); transform:rotate(4deg);}
+  .cp3{left:36px; background:var(--orange); transform:rotate(14deg);}
+</style>
+</head>
+<body>
+
+  <div class="auth-shell">
+    <div class="auth-visual">
+      <div class="auth-blob blob1"></div>
+      <div class="auth-blob blob2"></div>
+
+      <a href="index.html" class="logo">
+        <span class="logo-badge" style="background:rgba(255,255,255,0.18);">🧩</span>
+        <span><span class="a-part">Adapta</span><span class="k-part">Kids</span></span>
+      </a>
+      <h2>Crie sua conta</h2>
+      <p>É rápido, fácil e gratuito!</p>
+
+      <div class="auth-illustration">
+        <div class="backpack-scene">
+          <div class="backpack"></div>
+          <div class="pencil-cup">
+            <div class="cup-pencil cp1"></div>
+            <div class="cup-pencil cp2"></div>
+            <div class="cup-pencil cp3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-form-side">
+      <div class="auth-card">
+        <h1>Cadastrar</h1>
+
+        <div id="formErro" class="form-erro"></div>
+
+        <form id="formCadastro">
+          <div class="form-group">
+            <label for="nome">Nome completo</label>
+            <input class="form-control" type="text" id="nome" placeholder="Digite seu nome" required>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input class="form-control" type="email" id="email" placeholder="seu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <div class="input-icon-wrap">
+              <input class="form-control" type="password" id="senha" placeholder="Mínimo de 6 caracteres" required minlength="6">
+              <button type="button" class="icon-btn" aria-label="Mostrar senha">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="confirmar">Confirmar senha</label>
+            <div class="input-icon-wrap">
+              <input class="form-control" type="password" id="confirmar" placeholder="••••••••" required minlength="6">
+              <button type="button" class="icon-btn" aria-label="Mostrar senha">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="btnCadastrar" style="margin-top:6px;">Cadastrar</button>
+        </form>
+
+        <p class="auth-footer-note">Já tem uma conta? <a href="login.html" class="link-accent">Entrar</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('formCadastro').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const erroBox = document.getElementById('formErro');
+      const botao = document.getElementById('btnCadastrar');
+      erroBox.style.display = 'none';
+
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+      const confirmar = document.getElementById('confirmar').value;
+
+      if (!nome || !email || !senha || !confirmar) {
+        erroBox.textContent = 'Preencha todos os campos obrigatórios.';
+        erroBox.style.display = 'block';
+        return;
+      }
+      if (senha !== confirmar) {
+        erroBox.textContent = 'As senhas não coincidem.';
+        erroBox.style.display = 'block';
+        return;
+      }
+
+      botao.disabled = true;
+      botao.textContent = 'Criando conta...';
+      try {
+        await apiRequest('/auth/cadastro', {
+          method: 'POST',
+          body: JSON.stringify({ nome, email, senha, confirmar })
+        });
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        erroBox.textContent = err.message;
+        erroBox.style.display = 'block';
+        botao.disabled = false;
+        botao.textContent = 'Cadastrar';
+      }
+    });
+  </script>
+
+</body>
+</html>

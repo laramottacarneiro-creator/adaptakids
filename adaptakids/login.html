@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar — AdaptaKids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="api.js"></script>
+<style>
+  .blob1{width:260px;height:260px; top:-60px; left:-60px;}
+  .form-erro{background:#FEF2F2; color:#B91C1C; border:1px solid #FCA5A5; border-radius:10px; padding:10px 14px; font-size:0.88rem; margin-bottom:16px; display:none;}
+  .blob2{width:180px;height:180px; bottom:-40px; right:-40px;}
+
+  .book-scene{display:flex; align-items:flex-end; gap:14px;}
+  .book-stack{display:flex; flex-direction:column; gap:5px;}
+  .lbook{width:130px;height:30px;border-radius:6px; position:relative; box-shadow:0 8px 16px rgba(0,0,0,0.15);}
+  .lbook::after{content:'';position:absolute; right:10px; top:6px; bottom:6px; width:55%; background:rgba(255,255,255,0.85); border-radius:3px;}
+  .lb1{background:#FDE68A;}
+  .lb2{background:#FBCFE8;}
+  .lb3{background:#C4B5FD;}
+  .pot{
+    width:64px;height:56px; border-radius:6px 6px 16px 16px;
+    background:#F9A8D4; position:relative;
+  }
+  .plant-leaf{
+    position:absolute; bottom:52px; border-radius:50% 50% 50% 0;
+    background:var(--green); width:26px;height:26px;
+  }
+  .leaf1{left:10px; transform:rotate(-20deg);}
+  .leaf2{left:22px; transform:rotate(10deg) scaleY(1.2); bottom:60px;}
+  .leaf3{left:36px; transform:rotate(35deg);}
+</style>
+</head>
+<body>
+
+  <div class="auth-shell">
+    <div class="auth-visual">
+      <div class="auth-blob blob1"></div>
+      <div class="auth-blob blob2"></div>
+
+      <a href="index.html" class="logo">
+        <span class="logo-badge" style="background:rgba(255,255,255,0.18);">🧩</span>
+        <span><span class="a-part">Adapta</span><span class="k-part">Kids</span></span>
+      </a>
+      <h2>Que bom ter você de volta!</h2>
+      <p>Faça login para continuar adaptando materiais.</p>
+
+      <div class="auth-illustration">
+        <div class="book-scene">
+          <div class="pot">
+            <div class="plant-leaf leaf1"></div>
+            <div class="plant-leaf leaf2"></div>
+            <div class="plant-leaf leaf3"></div>
+          </div>
+          <div class="book-stack">
+            <div class="lbook lb1"></div>
+            <div class="lbook lb2"></div>
+            <div class="lbook lb3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-form-side">
+      <div class="auth-card">
+        <h1>Entrar</h1>
+
+        <div id="formErro" class="form-erro"></div>
+
+        <form id="formLogin">
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input class="form-control" type="email" id="email" placeholder="seu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <div class="input-icon-wrap">
+              <input class="form-control" type="password" id="senha" placeholder="••••••••" required>
+              <button type="button" class="icon-btn" aria-label="Mostrar senha">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="btnEntrar">Entrar</button>
+        </form>
+
+        <p class="auth-footer-note">Não tem uma conta? <a href="cadastro.html" class="link-accent">Cadastre-se</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('formLogin').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const erroBox = document.getElementById('formErro');
+      const botao = document.getElementById('btnEntrar');
+      erroBox.style.display = 'none';
+
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+
+      botao.disabled = true;
+      botao.textContent = 'Entrando...';
+      try {
+        await apiRequest('/auth/login', { method: 'POST', body: JSON.stringify({ email, senha }) });
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        erroBox.textContent = err.message;
+        erroBox.style.display = 'block';
+        botao.disabled = false;
+        botao.textContent = 'Entrar';
+      }
+    });
+  </script>
+
+</body>
+</html>

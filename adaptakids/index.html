@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdaptaKids — Educação inclusiva para todos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple: #7C6CF6;
+    --purple-dark: #5B4BE0;
+    --pink: #F17EB8;
+    --bg-lav: #F3F1FD;
+    --bg-lav2: #EDEAFC;
+    --text-dark: #2C2A4A;
+    --text-body: #5B5878;
+    --white: #ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-dark);
+    background: var(--bg-lav);
+    overflow-x:hidden;
+  }
+  h1,h2,.logo-text{font-family:'Poppins', sans-serif;}
+
+  /* NAVBAR */
+  .navbar{
+    max-width: 1400px;
+    margin: 20px auto 0;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 18px 36px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow: 0 8px 30px rgba(124,108,246,0.08);
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:700;
+    font-size:1.4rem;
+  }
+  .logo-icon{
+    width:34px;height:34px;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:1.5rem;
+  }
+  .logo-text .adapta{color:var(--purple-dark);}
+  .logo-text .kids{color:var(--pink);}
+
+  .nav-links{
+    display:flex;
+    gap:36px;
+    list-style:none;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color: var(--text-dark);
+    font-weight:600;
+    font-size:0.98rem;
+    transition: color .2s ease;
+  }
+  .nav-links a:hover{color:var(--purple-dark);}
+
+  .btn-entrar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border:2px solid var(--purple);
+    color:var(--purple-dark);
+    background:transparent;
+    padding:10px 22px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.95rem;
+    cursor:pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+  .btn-entrar:hover{background:var(--purple); color:var(--white);}
+
+  /* HERO */
+  .hero{
+    max-width:1400px;
+    margin: 0 auto;
+    padding: 90px 60px 60px;
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items:center;
+    gap: 40px;
+    position:relative;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background: var(--bg-lav2);
+    color: var(--purple-dark);
+    font-weight:700;
+    font-size:0.9rem;
+    padding: 9px 20px;
+    border-radius:999px;
+    margin-bottom: 28px;
+  }
+  .hero h1{
+    font-size: 3.2rem;
+    line-height:1.15;
+    font-weight:800;
+    color: var(--text-dark);
+    margin-bottom: 24px;
+  }
+  .hero h1 .accent{color: var(--purple);}
+  .hero p{
+    font-size:1.15rem;
+    color: var(--text-body);
+    max-width: 480px;
+    line-height:1.6;
+    margin-bottom: 36px;
+  }
+  .cta{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background: var(--purple-dark);
+    color:var(--white);
+    border:none;
+    padding: 18px 34px;
+    font-size:1.05rem;
+    font-weight:700;
+    border-radius: 14px;
+    cursor:pointer;
+    box-shadow: 0 12px 24px rgba(91,75,224,0.3);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .cta:hover{transform: translateY(-2px); box-shadow: 0 16px 30px rgba(91,75,224,0.38);}
+  .cta span.arrow{font-size:1.2rem;}
+
+  .trust-row{
+    display:flex;
+    gap: 32px;
+    margin-top: 40px;
+    flex-wrap:wrap;
+  }
+  .trust-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:700;
+    font-size:0.95rem;
+    color: var(--text-dark);
+  }
+  .trust-item .ic{color: var(--purple-dark);}
+
+  /* HERO ILLUSTRATION */
+  .illustration-wrap{
+    position:relative;
+    height: 480px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .arch{
+    position:absolute;
+    width: 380px;
+    height: 380px;
+    background: var(--bg-lav2);
+    border-radius: 190px 190px 24px 24px;
+    top: 20px;
+    right: 40px;
+  }
+  .float-dot{
+    position:absolute;
+    border-radius:50%;
+    background: var(--bg-lav2);
+  }
+  .dot1{width:26px;height:26px; top: 30px; left: 10px;}
+  .float-star{
+    position:absolute;
+    color: var(--purple);
+    opacity:0.5;
+    font-size:2.2rem;
+    top: 10px;
+    right: 10px;
+  }
+  .float-heart{
+    position:absolute;
+    color: var(--purple);
+    opacity:0.6;
+    font-size:2rem;
+    top: 60px;
+    right: 90px;
+  }
+  .float-puzzle{
+    position:absolute;
+    color: var(--purple);
+    opacity:0.55;
+    font-size:1.8rem;
+    top: 160px;
+    left: 60px;
+  }
+
+  .stack-scene{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:flex-end;
+    gap: 0;
+  }
+  .cup{
+    width: 74px;
+    height: 90px;
+    background: linear-gradient(180deg, #A697FA, #8C79F4);
+    border-radius: 12px 12px 20px 20px;
+    position:relative;
+    margin-right:-14px;
+    z-index:3;
+    box-shadow: 0 12px 20px rgba(124,108,246,0.35);
+  }
+  .pencil{
+    position:absolute;
+    bottom: 80px;
+    width: 8px;
+    height: 90px;
+    border-radius: 4px 4px 0 0;
+  }
+  .pencil1{background:#F17EB8; left: 16px; transform: rotate(-8deg);}
+  .pencil2{background:#7C6CF6; left: 32px; transform: rotate(2deg);}
+  .pencil3{background:#F4B740; left: 48px; transform: rotate(10deg);}
+  .pencil::after{
+    content:'';
+    position:absolute;
+    top:-14px; left:0;
+    width:0;height:0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 14px solid #F2C79A;
+  }
+
+  .books{
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+    z-index:2;
+  }
+  .book{
+    width: 220px;
+    height: 46px;
+    border-radius: 8px;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.08);
+    position:relative;
+  }
+  .book::after{
+    content:'';
+    position:absolute;
+    right: 14px; top:8px; bottom:8px;
+    width: 60%;
+    background: rgba(255,255,255,0.85);
+    border-radius: 4px;
+  }
+  .book1{background:#8C79F4;}
+  .book2{background:#F17EB8;}
+  .book3{background:#F4C05E;}
+
+  .puzzle-piece{
+    position:absolute;
+    right: -30px;
+    bottom: 10px;
+    width: 60px;
+    height: 60px;
+    background: var(--bg-lav2);
+    border-radius: 12px;
+  }
+
+  /* WAVE DIVIDER */
+  .wave{
+    display:block;
+    width:100%;
+    margin-top: 40px;
+  }
+
+  /* FOOTER */
+  footer{
+    background: var(--bg-lav2);
+    text-align:center;
+    padding: 60px 20px 50px;
+  }
+  .footer-logo{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-size:1.7rem;
+    font-weight:800;
+    margin-bottom: 22px;
+  }
+  footer p{
+    color: var(--text-body);
+    font-size:0.98rem;
+    margin-bottom: 6px;
+  }
+  .footer-copy{
+    font-size:0.88rem;
+    color: #8A87A6;
+    margin-top: 4px;
+  }
+  .socials{
+    display:flex;
+    justify-content:center;
+    gap: 16px;
+    margin-top: 26px;
+  }
+  .social-ic{
+    width:38px; height:38px;
+    border-radius:50%;
+    background: var(--purple-dark);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:1rem;
+  }
+
+  @media (max-width: 980px){
+    .navbar{flex-wrap:wrap; gap:16px; margin:16px; padding:16px 20px;}
+    .nav-links{order:3; width:100%; justify-content:center; gap:20px; flex-wrap:wrap;}
+    .hero{grid-template-columns:1fr; padding: 50px 24px;}
+    .hero h1{font-size:2.3rem;}
+    .illustration-wrap{height: 360px; margin-top:20px;}
+  }
+</style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <span class="logo-icon">🧩</span>
+      <span class="logo-text"><span class="adapta">Adapta</span><span class="kids">Kids</span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Início</a></li>
+      <li><a href="#">Sobre</a></li>
+      <li><a href="#">Como funciona</a></li>
+      <li><a href="#">Recursos</a></li>
+      <li><a href="#">Contato</a></li>
+    </ul>
+    <a href="login.html" class="btn-entrar" style="text-decoration:none; display:inline-flex;">👤 Entrar</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="badge">♡ Educação inclusiva para todos</div>
+      <h1>Pronto para tornar o ensino mais <span class="accent">acessível?</span></h1>
+      <p>Crie sua conta e comece a utilizar a plataforma. Adapte materiais, facilite o aprendizado e faça a diferença.</p>
+      <a href="cadastro.html" class="cta" style="text-decoration:none;">Criar minha conta <span class="arrow">→</span></a>
+
+      <div class="trust-row">
+        <div class="trust-item"><span class="ic">🛡️</span> Seguro</div>
+        <div class="trust-item"><span class="ic">✅</span> Fácil de usar</div>
+        <div class="trust-item"><span class="ic">⭐</span> Feito para educadores</div>
+      </div>
+    </div>
+
+    <div class="illustration-wrap">
+      <div class="arch"></div>
+      <div class="float-star">✦</div>
+      <div class="float-heart">♡</div>
+      <div class="float-puzzle">🧩</div>
+      <div class="float-dot dot1"></div>
+
+      <div class="stack-scene">
+        <div class="cup">
+          <div class="pencil pencil1"></div>
+          <div class="pencil pencil2"></div>
+          <div class="pencil pencil3"></div>
+        </div>
+        <div class="books">
+          <div class="book book1"></div>
+          <div class="book book2"></div>
+          <div class="book book3"></div>
+          <div class="puzzle-piece"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">
+      <span>🧩</span>
+      <span><span style="color:var(--purple-dark)">Adapta</span><span style="color:var(--pink)">Kids</span></span>
+    </div>
+    <p>Projeto desenvolvido para TCC - ETEC Parque Belém</p>
+    <p class="footer-copy">© 2026 AdaptaKids. Todos os direitos reservados.</p>
+    <div class="socials">
+      <a href="#" class="social-ic">📷</a>
+      <a href="#" class="social-ic">📘</a>
+      <a href="#" class="social-ic">✉️</a>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultado da adaptação — AdaptaKids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="api.js"></script>
+<script src="favorites.js"></script>
+<style>
+  .result-grid{display:grid; grid-template-columns:1fr 1.15fr; gap:20px; align-items:start;}
+  .estado-carregando{padding:40px; text-align:center; color:var(--text-muted);}
+  .panel{border-radius:var(--radius-md); padding:24px;}
+  .panel-original{background:#fff; border:1px solid var(--border); box-shadow:var(--shadow-sm);}
+  .panel-adapted{background:var(--green-bg); border:1px solid #A7F3D0;}
+  .panel-label{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;
+    padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .panel-original .panel-label{background:#F3F4F6; color:var(--text-muted);}
+  .panel-adapted .panel-label{background:#D1FAE5; color:#047857;}
+  .panel p{font-size:0.94rem; line-height:1.7; color:var(--text);}
+  .panel ul{margin-top:10px; padding-left:18px; list-style:disc;}
+  .panel li{font-size:0.94rem; line-height:1.7;}
+  .adapted-body{display:flex; gap:18px; align-items:flex-start;}
+  .lion-badge{
+    width:78px;height:78px;border-radius:16px;background:#fff;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    font-size:2.4rem; box-shadow:var(--shadow-sm);
+  }
+  .result-actions{display:flex; gap:10px;}
+  .panel-footer{display:flex; justify-content:flex-end; margin-top:18px;}
+  @media (max-width:900px){.result-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a href="index.html" class="logo">
+        <span class="logo-badge" style="background:rgba(255,255,255,0.18);">🧩</span>
+        <span><span class="a-part">Adapta</span><span class="k-part">Kids</span></span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          Dashboard
+        </a>
+        <a href="nova-adaptacao.html" class="active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M12 12v6M9 15h6"/></svg>
+          Nova adaptação
+        </a>
+        <a href="historico.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          Histórico
+        </a>
+        <a href="favoritos.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-6.7-4.35-9.3-8.1C.8 9.9 1.9 6.2 5.1 5.1c2-.7 4 .1 5.1 1.8C11.3 5.2 13.3 4.4 15.3 5.1c3.2 1.1 4.3 4.8 2.4 7.8C18.7 16.65 12 21 12 21z"/></svg>
+          Favoritos
+        </a>
+        <a href="perfil.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          Perfil
+        </a>
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9c.14.36.4.68.74.92.34.24.6.32 1.86.32v0"/></svg>
+          Configurações
+        </a>
+      </nav>
+      <a href="#" class="sidebar-logout" data-logout>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Sair
+      </a>
+    </aside>
+
+    <main class="app-main">
+      <div class="app-topbar">
+        <div>
+          <h1>Resultado da adaptação</h1>
+          <p class="subtitle">Confira abaixo o material adaptado.</p>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-ghost btn-sm" id="btnCopiar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copiar
+          </button>
+        </div>
+      </div>
+
+      <div id="estadoCarregando" class="estado-carregando">Carregando adaptação...</div>
+
+      <div class="result-grid" id="resultGrid" style="display:none;">
+        <div class="panel panel-original">
+          <span class="panel-label">Texto original</span>
+          <p id="textoOriginal"></p>
+        </div>
+
+        <div class="panel panel-adapted">
+          <span class="panel-label">Texto adaptado</span>
+          <div class="adapted-body">
+            <div>
+              <p id="textoAdaptado" style="white-space:pre-line;"></p>
+            </div>
+            <div class="lion-badge">🦁</div>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-primary btn-sm" id="btnFavoritar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-6.7-4.35-9.3-8.1C.8 9.9 1.9 6.2 5.1 5.1c2-.7 4 .1 5.1 1.8C11.3 5.2 13.3 4.4 15.3 5.1c3.2 1.1 4.3 4.8 2.4 7.8C18.7 16.65 12 21 12 21z"/></svg>
+              <span id="btnFavoritarTexto">Salvar nos favoritos</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (async () => {
+      const usuario = await exigirLogin();
+      if (!usuario) return;
+      hidratarUsuarioNaTopbar(usuario);
+
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const carregando = document.getElementById('estadoCarregando');
+
+      if (!id) {
+        carregando.textContent = 'Nenhuma adaptação informada. Volte e gere uma nova adaptação.';
+        return;
+      }
+
+      let adaptacao;
+      try {
+        const resposta = await apiRequest(`/adaptacoes/${id}`);
+        adaptacao = resposta.adaptacao;
+      } catch (err) {
+        carregando.textContent = err.message || 'Não foi possível carregar esta adaptação.';
+        return;
+      }
+
+      document.getElementById('textoOriginal').textContent = adaptacao.texto_original;
+      document.getElementById('textoAdaptado').textContent = adaptacao.texto_adaptado;
+
+      const btnFavoritar = document.getElementById('btnFavoritar');
+      const btnFavoritarTexto = document.getElementById('btnFavoritarTexto');
+      const atualizarBotaoFavorito = (favorito) => {
+        btnFavoritarTexto.textContent = favorito ? 'Remover dos favoritos' : 'Salvar nos favoritos';
+      };
+      atualizarBotaoFavorito(!!adaptacao.favorito);
+
+      btnFavoritar.addEventListener('click', async () => {
+        try {
+          const novoEstado = await alternarFavorito(adaptacao.id, null);
+          if (novoEstado !== null) atualizarBotaoFavorito(novoEstado);
+        } catch (err) { /* alternarFavorito já mostra o erro */ }
+      });
+
+      document.getElementById('btnCopiar').addEventListener('click', () => {
+        navigator.clipboard.writeText(adaptacao.texto_adaptado)
+          .then(() => alert('Texto adaptado copiado!'))
+          .catch(() => alert('Não foi possível copiar o texto.'));
+      });
+
+      carregando.style.display = 'none';
+      document.getElementById('resultGrid').style.display = 'grid';
+    })();
+  </script>
+
+</body>
+</html>

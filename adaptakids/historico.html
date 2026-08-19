@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Histórico — AdaptaKids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="api.js"></script>
+<script src="favorites.js"></script>
+<style>
+  th.th-fav, td.td-fav{text-align:center; width:50px;}
+  .empty-state{text-align:center; padding:50px 20px; color:var(--text-muted);}
+  .star-fav{cursor:pointer; transition: transform .15s ease;}
+  .star-fav:hover{transform:scale(1.15);}
+  select.form-control{appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%236B7280' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:36px;}
+</style>
+</head>
+<body>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a href="index.html" class="logo">
+        <span class="logo-badge" style="background:rgba(255,255,255,0.18);">🧩</span>
+        <span><span class="a-part">Adapta</span><span class="k-part">Kids</span></span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          Dashboard
+        </a>
+        <a href="nova-adaptacao.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M12 12v6M9 15h6"/></svg>
+          Nova adaptação
+        </a>
+        <a href="historico.html" class="active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          Histórico
+        </a>
+        <a href="favoritos.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-6.7-4.35-9.3-8.1C.8 9.9 1.9 6.2 5.1 5.1c2-.7 4 .1 5.1 1.8C11.3 5.2 13.3 4.4 15.3 5.1c3.2 1.1 4.3 4.8 2.4 7.8C18.7 16.65 12 21 12 21z"/></svg>
+          Favoritos
+        </a>
+        <a href="perfil.html">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          Perfil
+        </a>
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9c.14.36.4.68.74.92.34.24.6.32 1.86.32v0"/></svg>
+          Configurações
+        </a>
+      </nav>
+      <a href="#" class="sidebar-logout" data-logout>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Sair
+      </a>
+    </aside>
+
+    <main class="app-main">
+      <div class="app-topbar">
+        <div>
+          <h1>Histórico de adaptações</h1>
+          <p class="subtitle">Veja todos os materiais que você já adaptou.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn-circle" aria-label="Notificações">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+            <span class="dot"></span>
+          </button>
+          <div class="avatar">A</div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="filter-bar">
+          <input class="form-control" type="text" id="filtroBusca" placeholder="Buscar por título ou disciplina...">
+          <select class="form-control" id="filtroDisciplina">
+            <option>Todas as disciplinas</option>
+            <option>Língua Portuguesa</option>
+            <option>Matemática</option>
+            <option>Ciências</option>
+            <option>História</option>
+            <option>Geografia</option>
+          </select>
+          <select class="form-control" id="filtroAno">
+            <option>Todos os anos</option>
+            <option>1º ano</option>
+            <option>2º ano</option>
+            <option>3º ano</option>
+            <option>4º ano</option>
+            <option>5º ano</option>
+          </select>
+        </div>
+
+        <table id="tabelaHistorico" style="display:none;">
+          <thead>
+            <tr><th>Título</th><th>Disciplina</th><th>Ano</th><th>Data</th><th class="th-fav">Fav.</th></tr>
+          </thead>
+          <tbody id="tbodyHistorico"></tbody>
+        </table>
+
+        <div id="historicoVazio" class="empty-state" style="display:none;">
+          <p>Nenhuma adaptação encontrada. <a href="nova-adaptacao.html" class="link-accent">Criar uma nova adaptação</a>.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function iconeEstrela(item) {
+      const ativo = !!item.favorito;
+      return `<svg class="star-fav${ativo ? '' : ' inactive'}" width="18" height="18" viewBox="0 0 24 24" fill="${ativo ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" data-id="${item.id}">
+        <path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 16.9l-6.2 3.4 1.6-6.8L2.2 8.9l6.9-.6L12 2z"/>
+      </svg>`;
+    }
+
+    async function carregarHistorico() {
+      const busca = document.getElementById('filtroBusca').value.trim();
+      const disciplina = document.getElementById('filtroDisciplina').value;
+      const ano = document.getElementById('filtroAno').value;
+
+      const parametros = new URLSearchParams();
+      if (busca) parametros.set('busca', busca);
+      if (disciplina) parametros.set('disciplina', disciplina);
+      if (ano) parametros.set('ano', ano);
+
+      const { adaptacoes } = await apiRequest(`/adaptacoes?${parametros.toString()}`);
+      const tabela = document.getElementById('tabelaHistorico');
+      const tbody = document.getElementById('tbodyHistorico');
+      const vazio = document.getElementById('historicoVazio');
+
+      if (!adaptacoes.length) {
+        tabela.style.display = 'none';
+        vazio.style.display = 'block';
+        return;
+      }
+
+      tabela.style.display = 'table';
+      vazio.style.display = 'none';
+      tbody.innerHTML = adaptacoes.map(a => `
+        <tr data-row-id="${a.id}">
+          <td><a href="resultado.html?id=${a.id}" class="link-accent">${escaparHtml(a.titulo)}</a></td>
+          <td>${escaparHtml(a.disciplina)}</td>
+          <td>${escaparHtml(a.ano)}</td>
+          <td>${formatarData(a.criado_em)}</td>
+          <td class="td-fav">${iconeEstrela(a)}</td>
+        </tr>
+      `).join('');
+
+      tbody.querySelectorAll('.star-fav').forEach(star => {
+        star.addEventListener('click', async () => {
+          const id = star.getAttribute('data-id');
+          await alternarFavorito(id, star);
+        });
+      });
+    }
+
+    (async () => {
+      const usuario = await exigirLogin();
+      if (!usuario) return;
+      hidratarUsuarioNaTopbar(usuario);
+      await carregarHistorico();
+
+      document.getElementById('filtroDisciplina').addEventListener('change', carregarHistorico);
+      document.getElementById('filtroAno').addEventListener('change', carregarHistorico);
+      let debounce;
+      document.getElementById('filtroBusca').addEventListener('input', () => {
+        clearTimeout(debounce);
+        debounce = setTimeout(carregarHistorico, 300);
+      });
+    })();
+  </script>
+
+</body>
+</html>
