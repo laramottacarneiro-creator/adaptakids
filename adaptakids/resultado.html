@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="styles.css">
 <script src="api.js"></script>
 <script src="favorites.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <style>
   .result-grid{display:grid; grid-template-columns:1fr 1.15fr; gap:20px; align-items:start;}
   .estado-carregando{padding:40px; text-align:center; color:var(--text-muted);}
@@ -103,7 +104,7 @@
           <span class="panel-label">Texto adaptado</span>
           <div class="adapted-body">
             <div>
-              <p id="textoAdaptado" style="white-space:pre-line;"></p>
+              <div id="textoAdaptado"></div>
             </div>
             <div class="lion-badge">🦁</div>
           </div>
@@ -143,7 +144,7 @@
       }
 
       document.getElementById('textoOriginal').textContent = adaptacao.texto_original;
-      document.getElementById('textoAdaptado').textContent = adaptacao.texto_adaptado;
+      document.getElementById('textoAdaptado').innerHTML = marked.parse(adaptacao.texto_adaptado || '');
 
       const btnFavoritar = document.getElementById('btnFavoritar');
       const btnFavoritarTexto = document.getElementById('btnFavoritarTexto');
